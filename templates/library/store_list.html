@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stores</title>
+</head>
+<body>
+    <h1>Stores</h1>
+    <ul>
+        {% for store in stores %}
+            <li><a href="{% url 'library:store_detail' pk=store.pk %}">{{ store.name }}</a></li>
+        {% empty %}
+            <li>No stores.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
