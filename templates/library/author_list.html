@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authors</title>
+</head>
+<body>
+    <h1>Authors</h1>
+    <ul>
+    {% for author in authors %}
+        <li><a href="{% url 'library:author_detail' author.pk %}">{{ author.name }}</a></li>
+    {% empty %}
+        <li>No authors.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Index</title>
+</head>
+<body>
+    <h1>Library</h1>
+    <ul>
+        <li><a href="{% url 'library:author_list' %}">Authors</a></li>
+        <li><a href="{% url 'library:book_list' %}">Books</a></li>
+        <li><a href="{% url 'library:publisher_list' %}">Publishers</a></li>
+        <li><a href="{% url 'library:store_list' %}">Stores</a></li>
+    </ul>
+</body>
+</html>

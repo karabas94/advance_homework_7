@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.name }}</title>
+</head>
+<body>
+    <h1>{{ book.name }}</h1>
+    <table>
+        <tr>
+            <th>Pages:</th>
+            <td>{{ book.pages }}</td>
+        </tr>
+        <tr>
+            <th>Price:</th>
+            <td>${{ book.price }}</td>
+        </tr>
+        <tr>
+            <th>Rating:</th>
+            <td>{{ book.rating }}</td>
+        </tr>
+        <tr>
+            <th>Authors:</th>
+            <td>
+            {% for author in book.authors.all %}
+                {{ author.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                No authors.
+            {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Publisher:</th>
+            <td>{{ book.publisher.name }}</td>
+        </tr>
+        <tr>
+            <th>Publication date:</th>
+            <td>{{ book.pubdate }}</td>
+        </tr>
+    </table>
+</body>
+</html>

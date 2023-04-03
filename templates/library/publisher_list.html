@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Publishers</title>
+</head>
+<body>
+    <h1>Publishers</h1>
+    <ul>
+    {% for publisher in publishers %}
+        <li><a href="{% url 'library:publisher_detail' publisher.pk %}">{{ publisher.name }}</a></li>
+    {% empty %}
+        <li>No publishers.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

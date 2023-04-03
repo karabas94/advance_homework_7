@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ store.name }}</title>
+</head>
+<body>
+    <h1>{{ store.name }}</h1>
+    <h2>Books:</h2>
+    <ul>
+        {% for book in store.books.all %}
+            <li><a href="{% url 'library:book_detail' pk=book.pk %}">{{ book.name }}</a></li>
+        {% empty %}
+            <li>No books.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

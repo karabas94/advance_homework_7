@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ publisher.name }}</title>
+</head>
+<body>
+    <h1>{{ publisher.name }}</h1>
+    <h2>Books:</h2>
+    <ul>
+    {% for book in publisher.book_set.all %}
+        <li><a href="{% url 'library:book_detail' book.pk %}">{{ book.name }}</a></li>
+    {% empty %}
+        <li>No books.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
