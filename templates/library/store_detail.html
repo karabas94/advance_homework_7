@@ -5,10 +5,14 @@
 </head>
 <body>
     <h1>{{ store.name }}</h1>
+    <h1>Page</h1>
+    <ul>
+        <li>Average pages: {{ avg_pages }}</li>
+    </ul>
     <h2>Books:</h2>
     <ul>
         {% for book in store.books.all %}
-            <li><a href="{% url 'library:book_detail' pk=book.pk %}">{{ book.name }}</a></li>
+            <li><a href="{% url 'library:book_detail' pk=book.pk %}">{{ book.name }}</a> ({{ book.pages }} pages)</li>
         {% empty %}
             <li>No books.</li>
         {% endfor %}

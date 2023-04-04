@@ -5,6 +5,10 @@
 </head>
 <body>
     <h1>{{ publisher.name }}</h1>
+    <h2>Price:</h2>
+    <ul>
+        <li>Average price: ${{ avg_price }}</li>
+    </ul>
     <h2>Books:</h2>
     <ul>
     {% for book in publisher.book_set.all %}

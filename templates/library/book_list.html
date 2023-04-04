@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Books list</title>
+    <title>Books</title>
 </head>
 <body>
     <h1>Books list</h1>
     <ul>
         {% for book in books %}
-            <li><a href="{% url 'library:book_detail' book.pk %}">{{ book.name }}</a></li>
+            <li><a href="{% url 'library:book_detail' book.pk %}">{{ book.name }}</a> ({{ book.num_authors}} authors)</li>
+            <ul>
+                <li>Authors:
+                    {% for author in book.authors.all %}
+                        <a href="{% url 'library:author_detail' author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
         {% empty %}
             <li>No books yet.</li>
         {% endfor %}

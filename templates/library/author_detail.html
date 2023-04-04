@@ -6,6 +6,10 @@
 <body>
     <h1>{{ author.name }}</h1>
     <p>Age: {{ author.age }}</p>
+    <h2>Statistics:</h2>
+    <ul>
+        <li>Average rating: {{ avg_rating }}</li>
+    </ul>
     <h2>Books:</h2>
     <ul>
     {% for book in author.book_set.all %}

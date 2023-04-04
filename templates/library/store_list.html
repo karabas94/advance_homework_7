@@ -7,7 +7,14 @@
     <h1>Stores</h1>
     <ul>
         {% for store in stores %}
-            <li><a href="{% url 'library:store_detail' pk=store.pk %}">{{ store.name }}</a></li>
+            <li><a href="{% url 'library:store_detail' pk=store.pk %}">{{ store.name }}</a> ({{ store.num_books }} books)</li>
+            <ul>
+                {% for book in store.books.all %}
+                    <li>{{ book.name }}</li>
+                {% empty %}
+                    <li>No books in this store.</li>
+                {% endfor %}
+            </ul>
         {% empty %}
             <li>No stores.</li>
         {% endfor %}

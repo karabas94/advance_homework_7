@@ -4,10 +4,17 @@
     <title>Publishers</title>
 </head>
 <body>
-    <h1>Publishers</h1>
+    <h1>Publishers list</h1>
     <ul>
     {% for publisher in publishers %}
-        <li><a href="{% url 'library:publisher_detail' publisher.pk %}">{{ publisher.name }}</a></li>
+        <li><a href="{% url 'library:publisher_detail' publisher.pk %}">{{ publisher.name }}</a> ({{ publisher.num_books }} books)</li>
+        <ul>
+            {% for book in publisher.book_set.all %}
+                <li>{{ book.name }}</li>
+            {% empty %}
+                <li>No books for this publisher.</li>
+            {% endfor %}
+        </ul>
     {% empty %}
         <li>No publishers.</li>
     {% endfor %}
