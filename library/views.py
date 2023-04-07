@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, Author, Publisher, Store
 from django.db.models import Count, Avg
+from .forms import ReminderForm
 
 
 def index(request):
@@ -49,3 +50,18 @@ def store_detail(request, pk):
     store = get_object_or_404(Store.objects.prefetch_related('books'), pk=pk)
     avg_pages = store.books.aggregate(Avg('pages'))['pages__avg']
     return render(request, 'library/store_detail.html', {'store': store, 'avg_pages': avg_pages})
+
+
+def reminder(request):
+    if request.method == 'POST':
+        reminder_form = ReminderForm(request.POST)
+        if reminder_form.is_valid():
+            reminder_form.save()
+            return redirect('success')
+    else:
+        reminder_form = ReminderForm()
+    return render(request, 'library/reminder.html', {'reminder_form': reminder_form})
+
+
+def success(request):
+    return render(request, 'library/success.html')
