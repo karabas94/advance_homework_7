@@ -1,5 +1,6 @@
 from django import forms
 from django.utils import timezone
+from datetime import timedelta
 
 
 class ReminderForm(forms.Form):
@@ -21,7 +22,7 @@ class ReminderForm(forms.Form):
 
     def clean_datetime(self):
         datetime = self.cleaned_data['datetime']
-        max_datetime = timezone.now() + datetime.timedelta(days=2)
+        max_datetime = timezone.now() + timedelta(days=2)
 
         if datetime < timezone.now():
             raise forms.ValidationError("Datetime can't be in the past.")

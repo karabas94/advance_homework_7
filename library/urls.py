@@ -13,4 +13,6 @@ urlpatterns = [
     path('publishers/<int:pk>/', views.publisher_detail, name='publisher_detail'),
     path('stores/', views.store_list, name='store_list'),
     path('stores/<int:pk>/', views.store_detail, name='store_detail'),
+    path('reminder/', views.reminder, name='reminder'),
+    path('reminder/success/', views.success, name='success'),
 ]
