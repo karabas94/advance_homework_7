@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, Author, Publisher, Store
 from django.db.models import Count, Avg
 from .forms import ReminderForm
+from .tasks import send_reminder
 
 
 def index(request):
@@ -56,8 +57,11 @@ def reminder(request):
     if request.method == 'POST':
         reminder_form = ReminderForm(request.POST)
         if reminder_form.is_valid():
-            reminder_form.save()
-            return redirect('success')
+            email = reminder_form.cleaned_data['email']
+            text = reminder_form.cleaned_data['text']
+            datetime = reminder_form.cleaned_data['datetime']
+            send_reminder.apply_async(args=[email, text], eta=datetime)
+            return redirect('library:success')
     else:
         reminder_form = ReminderForm()
     return render(request, 'library/reminder.html', {'reminder_form': reminder_form})

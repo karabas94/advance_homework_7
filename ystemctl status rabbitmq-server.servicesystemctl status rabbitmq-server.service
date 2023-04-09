@@ -1,0 +1,14 @@
+○ rabbitmq-server.service - RabbitMQ Messaging Server
+     Loaded: loaded (/lib/systemd/system/rabbitmq-server.service; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+
+апр 09 01:45:39 admin systemd[1]: rabbitmq-server.service: Scheduled restart job, restart counter is at 7.
+апр 09 01:45:39 admin systemd[1]: Stopped RabbitMQ Messaging Server.
+апр 09 01:45:39 admin systemd[1]: rabbitmq-server.service: Consumed 2.722s CPU time.
+апр 09 01:45:39 admin systemd[1]: Starting RabbitMQ Messaging Server...
+апр 09 01:45:42 admin systemd[1]: [0;1;39m[0;1;31m[0;1;39mrabbitmq-server.service: Main process exited, code=exited, status=1/FAILURE[0m
+апр 09 01:45:42 admin systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mrabbitmq-server.service: Failed with result 'exit-code'.[0m
+апр 09 01:45:42 admin systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start RabbitMQ Messaging Server.[0m
+апр 09 01:45:42 admin systemd[1]: rabbitmq-server.service: Consumed 2.581s CPU time.
+апр 09 01:45:48 admin systemd[1]: Stopped RabbitMQ Messaging Server.
+апр 09 01:45:48 admin systemd[1]: rabbitmq-server.service: Consumed 2.581s CPU time.
