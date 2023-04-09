@@ -13,6 +13,9 @@
   * created fixtures in db.json
   * create views and templates
   * used aggregate, annotate, prefetch_related and select_related
+  * created reminder form
+  * created tasks
+  * installed celery and rabbitmq-server
 --------
 **How to start project**
 * install all from requirements.txt
@@ -51,6 +54,18 @@
 ```
     
     http://127.0.0.1:8000/library/
+    
+```
+* for start celery:
+```
+    
+    celery -A core worker --loglevel=info
+    
+```
+* for start rabbitmq-server:
+```
+    
+    sudo systemctl start rabbitmq-server
     
 ```
 * Quit the server with CONTROL-C.
