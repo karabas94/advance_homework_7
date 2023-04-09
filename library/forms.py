@@ -1,12 +1,13 @@
 from django import forms
 from django.utils import timezone
 from datetime import timedelta
+from django.forms import DateTimeInput
 
 
 class ReminderForm(forms.Form):
     email = forms.EmailField(label='Enter email', required=True)
     text = forms.CharField(widget=forms.Textarea, required=True)
-    datetime = forms.DateTimeField(label='Enter time', required=True)
+    datetime = forms.DateTimeField(widget=DateTimeInput(attrs={'type': 'datetime-local'}), input_formats=['%Y-%m-%dT%H:%M'])
 
     def clean_email(self):
         email = self.cleaned_data['email']
