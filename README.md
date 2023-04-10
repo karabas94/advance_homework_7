@@ -16,6 +16,7 @@
   * created reminder form
   * created tasks
   * installed celery and rabbitmq-server
+  * created scraping app, models, migrations, views, templates, tasks
 --------
 **How to start project**
 * install all from requirements.txt
@@ -54,12 +55,19 @@
 ```
     
     http://127.0.0.1:8000/library/
+    http://127.0.0.1:8000/quote/
     
 ```
 * for start celery:
 ```
     
     celery -A core worker --loglevel=info
+    
+```
+* for starts the celery beat service:
+```
+    
+    celery -A core beat -l info
     
 ```
 * for start rabbitmq-server:
