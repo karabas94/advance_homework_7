@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_celery_results',
 
     'library',
+    'scraping',
 ]
 
 MIDDLEWARE = [
