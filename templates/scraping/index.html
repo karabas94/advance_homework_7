@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quotes</title>
+</head>
+<body>
+      <h1>Quotes</h1>
+          {% for quote in quotes %}
+            <p>
+              "{{ quote.quote }}"
+              by <a href="{% url 'quotes_by_author' author_id=quote.author.id %}">{{ quote.author.name }}</a>
+            </p>
+          {% empty %}
+            <p>No quotes available.</p>
+          {% endfor %}
+</body>
+</html>
