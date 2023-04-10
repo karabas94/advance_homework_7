@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
     path('library/', include('library.urls')),
+    path('quote/', include('scraping.urls')),
 ]
