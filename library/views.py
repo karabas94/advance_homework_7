@@ -3,6 +3,8 @@ from .models import Book, Author, Publisher, Store
 from django.db.models import Count, Avg
 from .forms import ReminderForm
 from .tasks import send_reminder
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 
 def index(request):
@@ -15,20 +17,29 @@ def author_list(request):
 
 
 def author_detail(request, pk):
-    author = get_object_or_404(Author.objects.annotate(avg_rating=Avg("book__rating")).prefetch_related('book_set').all(), pk=pk)
+    author = get_object_or_404(
+        Author.objects.annotate(avg_rating=Avg("book__rating")).prefetch_related('book_set').all(), pk=pk)
     avg_rating = author.avg_rating
     return render(request, 'library/author_detail.html', {'author': author, 'avg_rating': avg_rating})
 
 
-def book_list(request):
-    books = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
-    return render(request, 'library/book_list.html', {'books': books})
+class BookListView(ListView):
+    model = Book
+    paginate_by = 10
+    queryset = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
+
+# def book_list(request):
+#     books = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
+#     return render(request, 'library/book_list.html', {'books': books})
 
 
-def book_detail(request, pk):
-    book = get_object_or_404(Book.objects.select_related('publisher').annotate(num_authors=Count('authors')).all(), pk=pk)
-    num_authors = book.num_authors
-    return render(request, 'library/book_detail.html', {'book': book, 'num_authors': num_authors})
+class BookDetailView(DetailView):
+    model = Book
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.select_related('publisher').annotate(num_authors=Count('authors'))
+        return queryset
 
 
 def publisher_list(request):
@@ -37,7 +48,8 @@ def publisher_list(request):
 
 
 def publisher_detail(request, pk):
-    publisher = get_object_or_404(Publisher.objects.prefetch_related('book_set').annotate(price__avg=Avg("book__price")), pk=pk)
+    publisher = get_object_or_404(
+        Publisher.objects.prefetch_related('book_set').annotate(price__avg=Avg("book__price")), pk=pk)
     avg_price = publisher.price__avg
     return render(request, 'library/publisher_detail.html', {'publisher': publisher, 'avg_price': avg_price})
 
