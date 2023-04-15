@@ -3,8 +3,9 @@ from .models import Book, Author, Publisher, Store
 from django.db.models import Count, Avg
 from .forms import ReminderForm
 from .tasks import send_reminder
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
@@ -28,10 +29,6 @@ class BookListView(ListView):
     paginate_by = 10
     queryset = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
 
-# def book_list(request):
-#     books = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
-#     return render(request, 'library/book_list.html', {'books': books})
-
 
 class BookDetailView(DetailView):
     model = Book
@@ -40,6 +37,23 @@ class BookDetailView(DetailView):
         queryset = super().get_queryset()
         queryset = queryset.select_related('publisher').annotate(num_authors=Count('authors'))
         return queryset
+
+
+class BookCreateView(LoginRequiredMixin, CreateView):
+    model = Book
+    fields = ['name', 'pages', 'price', 'rating', 'authors', 'publisher', 'pubdate']
+    success_url = reverse_lazy('library:book_list')
+
+
+class BookUpdateView(LoginRequiredMixin, UpdateView):
+    model = Book
+    fields = ['name', 'pages', 'price', 'rating', 'authors', 'publisher', 'pubdate']
+    success_url = reverse_lazy('library:book_list')
+
+
+class BookDeleteView(LoginRequiredMixin, DeleteView):
+    model = Book
+    success_url = reverse_lazy('library:book_list')
 
 
 def publisher_list(request):
