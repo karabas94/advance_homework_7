@@ -41,5 +41,11 @@
             <td>{{ object.num_authors }}</td>
         </tr>
     </table>
+    <p>
+        <a href="{% url 'library:book_update' object.pk %}">Edit</a>
+    </p>
+    <p>
+        <a href="{% url 'library:book_delete' object.pk %}">Delete</a>
+    </p>
 </body>
 </html>
