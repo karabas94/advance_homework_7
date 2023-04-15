@@ -15,8 +15,8 @@ def author_list(request):
 
 
 def author_detail(request, pk):
-    author = get_object_or_404(Author.objects.prefetch_related('book_set').all(), pk=pk)
-    avg_rating = author.book_set.all().aggregate(Avg('rating'))['rating__avg']
+    author = get_object_or_404(Author.objects.annotate(avg_rating=Avg("book__rating")).prefetch_related('book_set').all(), pk=pk)
+    avg_rating = author.avg_rating
     return render(request, 'library/author_detail.html', {'author': author, 'avg_rating': avg_rating})
 
 
@@ -26,8 +26,8 @@ def book_list(request):
 
 
 def book_detail(request, pk):
-    book = get_object_or_404(Book.objects.select_related('publisher').prefetch_related('authors').all(), pk=pk)
-    num_authors = book.authors.all().aggregate(Count('id'))['id__count']
+    book = get_object_or_404(Book.objects.select_related('publisher').annotate(num_authors=Count('authors')).all(), pk=pk)
+    num_authors = book.num_authors
     return render(request, 'library/book_detail.html', {'book': book, 'num_authors': num_authors})
 
 
@@ -37,8 +37,8 @@ def publisher_list(request):
 
 
 def publisher_detail(request, pk):
-    publisher = get_object_or_404(Publisher.objects.prefetch_related('book_set'), pk=pk)
-    avg_price = publisher.book_set.all().aggregate(Avg('price'))['price__avg']
+    publisher = get_object_or_404(Publisher.objects.prefetch_related('book_set').annotate(price__avg=Avg("book__price")), pk=pk)
+    avg_price = publisher.price__avg
     return render(request, 'library/publisher_detail.html', {'publisher': publisher, 'avg_price': avg_price})
 
 
@@ -48,8 +48,8 @@ def store_list(request):
 
 
 def store_detail(request, pk):
-    store = get_object_or_404(Store.objects.prefetch_related('books'), pk=pk)
-    avg_pages = store.books.aggregate(Avg('pages'))['pages__avg']
+    store = get_object_or_404(Store.objects.prefetch_related('books').annotate(price__avg=Avg("books__price")), pk=pk)
+    avg_pages = store.price__avg
     return render(request, 'library/store_detail.html', {'store': store, 'avg_pages': avg_pages})
 
 
