@@ -17,6 +17,8 @@
   * created tasks
   * installed celery and rabbitmq-server
   * created scraping app, models, migrations, views, templates, tasks
+  * created Book create, update, delete view and templates
+  * updated Book deteil and list view and templates 
 --------
 **How to start project**
 * install all from requirements.txt
