@@ -19,6 +19,7 @@
   * created scraping app, models, migrations, views, templates, tasks
   * created Book create, update, delete view and templates
   * updated Book deteil and list view and templates 
+  * added cache_page
 --------
 **How to start project**
 * install all from requirements.txt
@@ -34,7 +35,7 @@
     $ ./manage.py create_users
     
 ```
-* for create 1000 books, 100 authors, 10 publisher and 10 store:
+* for create 2000 books, 500 authors, 20 publisher and 20 store:
 ```
     
     $ ./manage.py create_library
@@ -50,7 +51,7 @@
   * load fixtures
 ```
     
-    $ ./manage.py loaddata db.json
+    $ ./manage.py loaddata fixtures/db.json
     
 ```
 * for check apps:
