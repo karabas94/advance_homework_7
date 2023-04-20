@@ -6,12 +6,15 @@ from .tasks import send_reminder
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 def index(request):
     return render(request, 'library/index.html')
 
 
+@cache_page(60 * 15)
 def author_list(request):
     authors = Author.objects.prefetch_related('book_set').annotate(num_books=Count('book')).all()
     return render(request, 'library/author_list.html', {'authors': authors})
@@ -24,9 +27,10 @@ def author_detail(request, pk):
     return render(request, 'library/author_detail.html', {'author': author, 'avg_rating': avg_rating})
 
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class BookListView(ListView):
     model = Book
-    paginate_by = 10
+    paginate_by = 1000
     queryset = Book.objects.prefetch_related('authors').annotate(num_authors=Count('authors')).all()
 
 
@@ -56,6 +60,7 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('library:book_list')
 
 
+# @cache_page(60*15)
 def publisher_list(request):
     publishers = Publisher.objects.prefetch_related('book_set').annotate(num_books=Count('book')).all()
     return render(request, 'library/publisher_list.html', {'publishers': publishers})
@@ -68,6 +73,7 @@ def publisher_detail(request, pk):
     return render(request, 'library/publisher_detail.html', {'publisher': publisher, 'avg_price': avg_price})
 
 
+# @cache_page(60*15)
 def store_list(request):
     stores = Store.objects.prefetch_related('books').annotate(num_books=Count('books')).all()
     return render(request, 'library/store_list.html', {'stores': stores})

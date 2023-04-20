@@ -15,17 +15,17 @@ class Command(BaseCommand):
     help = 'Create library'
 
     def handle(self, *args, **options):
-        # create 100 author
-        authors = [Author(name=fake.name(), age=randint(20, 80)) for _ in range(100)]
+        # create 500 author
+        authors = [Author(name=fake.name(), age=randint(20, 80)) for _ in range(500)]
         Author.objects.bulk_create(authors)
 
-        # create 10 publisher
-        publishers = [Publisher(name=f'Publisher{index}') for index in range(1, 11)]
+        # create 20 publisher
+        publishers = [Publisher(name=f'Publisher{index}') for index in range(1, 21)]
         Publisher.objects.bulk_create(publishers)
 
-        # create 1000 books
+        # create 2000 books
         books = []
-        for index in range(1000):
+        for index in range(2000):
             book = Book(
                 name=f"Book {index}",
                 pages=randint(100, 1000),
@@ -40,7 +40,7 @@ class Command(BaseCommand):
 
         # create 10 stores
         stores = []
-        for i in range(10):
+        for i in range(20):
             store = Store(
                 name=f"Store {i}",
             )
